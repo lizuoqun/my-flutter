@@ -12,6 +12,9 @@ class MyCustomScrollView extends StatefulWidget {
 }
 
 class _MyCustomScrollView extends State<MyCustomScrollView> {
+  PageController _pageController = PageController(); // pageView控制器
+  int _currentIndex = 0; // 当前索引
+
   // 直接生成100个Container
   List<Widget> getList() {
     return List.generate(100, (index) {
@@ -29,14 +32,13 @@ class _MyCustomScrollView extends State<MyCustomScrollView> {
   }
 
   // 生成一个Container
-  Container getContainer(int index) {
+  Container getContainer(int index, String title) {
     return Container(
-      width: double.infinity,
-      height: 100,
+      height: 200,
       color: Colors.blue,
       alignment: Alignment.center,
       child: Text(
-        "列表项第${index + 1}个",
+        "$title第${index + 1}个",
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
@@ -51,19 +53,65 @@ class _MyCustomScrollView extends State<MyCustomScrollView> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Center(child: Text("CustomScrollView滚动"))),
+        appBar: AppBar(
+          title: Center(child: Text("CustomScrollView+PageView滚动")),
+        ),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: Container(
-                width: double.infinity,
-                height: 200,
-                color: Colors.blue,
-                alignment: Alignment.center,
-                child: Text(
-                  "轮播图",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 200,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemBuilder: (BuildContext context, int index) {
+                        return getContainer(index, "轮播图");
+                      },
+                      itemCount: 20,
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    // child: Container(color: Colors.red,
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        10,
+                            (index) => GestureDetector(
+                          onTap: () {
+                            print('点击索引----$index');
+                            // _pageController.jumpToPage(index);
+                            _pageController.animateToPage(
+                              index,
+                              duration: Duration(seconds: 1),
+                              curve: Curves.ease,
+                            );
+                            // _pageController.animateToPage(index, duration: Duration(seconds: 1), curve: Curves.ease);
+                            // _pageController.animateToPage(index, duration: Duration(seconds: 1), curve: Curves.easeIn);
+                            setState(() {
+                              _currentIndex = index;
+                            });
+                          },
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            margin: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              color: _currentIndex == index
+                                  ? Colors.red
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 10)),
@@ -71,7 +119,7 @@ class _MyCustomScrollView extends State<MyCustomScrollView> {
             // SliverList.separated(
             //   itemCount: 100,
             //   itemBuilder: (BuildContext text, int index) {
-            //     return getContainer(index);
+            //     return getContainer(index, "列表项");
             //   },
             //   separatorBuilder: (BuildContext text, int index) {
             //     return getSeparatorContainer(index);
@@ -107,10 +155,10 @@ class _StickyCategory extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+      BuildContext context,
+      double shrinkOffset,
+      bool overlapsContent,
+      ) {
     return Container(
       color: Colors.white,
       child: ListView.builder(
