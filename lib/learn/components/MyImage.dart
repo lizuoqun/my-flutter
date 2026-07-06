@@ -22,7 +22,7 @@ class MyImage extends StatelessWidget {
             children: [
               Text("asset本地图片"),
               Image.asset(
-                "lib/images/person.webp",
+                "lib/assets/images/person.webp",
                 width: 200,
                 height: 100,
                 fit: BoxFit.cover,
