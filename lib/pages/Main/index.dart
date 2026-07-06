@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../Category/index.dart';
+import '../Home/index.dart';
+import '../My/index.dart';
+import '../Shop/index.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -46,11 +51,16 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  List<Widget> _getChildren() {
+    return [HomeView(), CategoryView(), ShopView(), MyView()];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("首页")),
-      body: Container(child: Text("内容区")),
+      body: SafeArea(
+        child: IndexedStack(index: _currentIndex, children: _getChildren()),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           _currentIndex = index;
