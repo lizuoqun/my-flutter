@@ -8,4 +8,6 @@ class GlobalConstants {
 // 请求地址接口常量
 class ApiConstants {
   static const String BANNER_URL = "/home/banner";
+  static const String CATEGORY_URL = "/home/category/head";
+  static const String HOT_URL = "/hot/preference";
 }
