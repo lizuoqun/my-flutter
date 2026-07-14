@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../stores/UserController.dart';
 
 class MyView extends StatefulWidget {
   const MyView({super.key});
@@ -8,8 +11,19 @@ class MyView extends StatefulWidget {
 }
 
 class _MyViewState extends State<MyView> {
+  final UserController userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Obx(() {
+      return Container(
+        child: Center(
+          child: Text(
+            '${userController.userInfo.value.username}',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      );
+    });
   }
 }

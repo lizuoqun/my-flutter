@@ -10,4 +10,7 @@ class ApiConstants {
   static const String BANNER_URL = "/home/banner";
   static const String CATEGORY_URL = "/home/category/head";
   static const String HOT_URL = "/hot/preference";
+
+  static const String IN_VOGUE_URL = "/hot/inVogue";
+  static const String ONE_STOP_URL = "/hot/oneStop";
 }
