@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:my_flutter/utils/TokenManager.dart';
 
 import '../constant/index.dart';
 
@@ -21,6 +22,11 @@ class DioRequest {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
+          if (tokenManager.getToken().isNotEmpty) {
+            options.headers = {
+              "Authorization": "Bearer ${tokenManager.getToken()}",
+            };
+          }
           return handler.next(options);
         },
         onResponse: (response, handler) {

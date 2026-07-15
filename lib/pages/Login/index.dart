@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_flutter/utils/TokenManager.dart';
 
 import '../../stores/UserController.dart';
 import '../../types/user.dart';
@@ -68,6 +69,10 @@ class _LoginPageState extends State<LoginPage> {
               password: "123456",
               email: "admin@example.com",
             ),
+          );
+          // 写入一个token测试
+          tokenManager.setToken(
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbm5hbWUiOiJnbF9nempnIiwiZXhwIjoxNzg0MDgyOTI1LCJpYXQiOjE3ODQwNzkzMjV9.c4Sp3m2OvnpET8myG7lkbPFqClMwcfBEKKr1jeqTJnE",
           );
         } else {
           MessageUtils.showMessage(context, '登录失败');

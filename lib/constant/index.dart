@@ -3,6 +3,7 @@ class GlobalConstants {
   static const String BASE_URL = "https://meikou-api.itheima.net";
   static const int TIME_OUT = 10;
   static const String SUCCESS_CODE = "1";
+  static const String TOKEN_KEY = "token";
 }
 
 // 请求地址接口常量
