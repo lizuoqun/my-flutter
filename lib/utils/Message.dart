@@ -17,7 +17,7 @@ class MessageUtils {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         behavior: SnackBarBehavior.floating,
         duration: Duration(seconds: 3),
-        content: Text(message ?? '加载成功', textAlign: TextAlign.center),
+        content: Text(message, textAlign: TextAlign.center),
       ),
     );
   }
